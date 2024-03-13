@@ -4,8 +4,11 @@ import org.assertj.core.api.BDDAssertions;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.BDDMockito;
 import org.mockito.Captor;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.service.ClinicService;
 import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
@@ -24,6 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 
+@ExtendWith( MockitoExtension.class )
 @SpringJUnitWebConfig( locations = { "classpath:spring/mvc-core-config.xml", "classpath:spring/test-config.xml" })
 public class PassingFormParameterDemoIT {
 
@@ -32,6 +36,9 @@ public class PassingFormParameterDemoIT {
 
     @Autowired
     OwnerController ownerController;
+
+    @Captor
+    ArgumentCaptor<String> lastNameCaptor;
 
     MockMvc mockMvc;
 
@@ -46,11 +53,16 @@ public class PassingFormParameterDemoIT {
         given( clinicService.findOwnerByLastName("doe") )
                 .willReturn( Collections.emptyList() );
 
+        // When:
         mockMvc.perform( get("/owners")
                     .param( "lastName", "doe")
                     .param("firstName", "john") )
                 .andExpect( status().isOk() )
                 .andExpect( view().name("owners/findOwners") );
+
+        // Then:  "lastName" should be "doe"
+        then( clinicService ).should().findOwnerByLastName(  lastNameCaptor.capture() );
+        assertEquals( "doe", lastNameCaptor.getValue() );
     }
 
 
