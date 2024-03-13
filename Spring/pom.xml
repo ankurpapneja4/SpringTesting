@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>guru.springframework.petclinic</groupId>
-    <artifactId>tb2g-testing-spring</artifactId>
+    <artifactId>spring-testing</artifactId>
     <version>5.1.0</version>
 
-    <name>tb2g-testing-spring</name>
+    <name>spring-testing</name>
     <packaging>war</packaging>
     <description>*** FORK FROM ORIGINAL SPRING PROJECT TO DEMO TESTING FEATURES OF SPRING *** A Spring Framework application based on JSP, Spring MVC, Spring Data JPA, Hibernate and JDBC</description>
     <url>https://github.com/spring-petclinic/</url>
