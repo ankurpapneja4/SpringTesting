@@ -9,6 +9,12 @@ public class OwnerService {
         this.ownerRepository = ownerRepository;
     }
 
+    public Owner saveOwner( Owner owner){
+
+        // Delegate to OwnerRepository
+        return ownerRepository.save( owner );
+    }
+
     public void deleteOwner( Integer ownerId ){
 
         if( ownerId == null ) throw new IllegalArgumentException(" ownerId cannot be null ");
